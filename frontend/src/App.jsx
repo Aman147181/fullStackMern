@@ -1,31 +1,27 @@
-import React from "react";
-function App() {
-  // State to hold the user data
-  const [users, setUsers] = React.useState([]);
-
-  // Fetch user data from the server when the component mounts
-  React.useEffect(() => {
-    fetch("http://localhost:3000/users")
-      .then((response) => response.json())
-      .then((json) => setUsers(json))
-      .catch((error) => console.log(error));
-  }, []);
-
-  // Render the component
+import React, { useState } from "react";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import NotFound from "./components/NotFound";
+import Home from "./pages/Home";
+import {  Routes, Route } from "react-router-dom";
+import Shop from "./pages/Shop";
+import Contact from "./pages/Contact";
+import Footer from "./components/Footer";
+const App = () => {
+  const [sidebar, setSidebar] = useState(false);
   return (
     <div>
-      {console.log(users)}
-      {/* Title */}
-      <h1 className="text-center text-blue-600 ">hello world</h1>
-      
-      {/* Display user names */}
-      {users.map((user) => (
-        <div className="text-center" key={user.id}>
-          {user.name}
-        </div>
-      ))}
+      <Header sidebar={sidebar} setSidebar={setSidebar} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
+      <Footer/>
     </div>
   );
-}
+};
 
 export default App;
