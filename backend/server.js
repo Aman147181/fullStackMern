@@ -232,7 +232,7 @@ app.listen(3000, () => {
 app.get("/", (req, res) => {
   console.log("hello from server");
 });
-app.get("/api/furniture", async (req, res) => {
+app.get("/api/furnitur", async (req, res) => {
   try {
     res.send(furnitureapi);
   } catch (error) {
