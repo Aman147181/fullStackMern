@@ -48,14 +48,15 @@ const Header = ({ sidebar, setSidebar }) => {
         </RouterLink>
       </div>
       <div className=" flex items-center space-x-2 sm:space-x-3 justify-center text-[#254D4D]">
-        <button><FiShoppingCart/></button>
-        <button><FaRegHeart/></button>
-
         <button
           onClick={onOpen}
-          className="rounded-full  uppercase  md:hover:text-[#815b44]"
+          className="rounded-full   flex items-center space-x-1  "
         >
-          <FaUser />
+          <h1 className=" pr-1">
+            <FaUser />
+          </h1>{" "}
+          <h1 className="md:hover:text-[#254D4D] hover:font-medium" onClick={() => setSelected("login")}>Login</h1> <h1>/</h1>
+          <h1 className="md:hover:text-[#254D4D] hover:font-medium" onClick={()=>setSelected("sign-up")}>Sign up</h1>
         </button>
       </div>
       <button
@@ -65,7 +66,12 @@ const Header = ({ sidebar, setSidebar }) => {
         {sidebar ? <RxCross2 /> : <RxHamburgerMenu />}
       </button>
 
-      <Modal placement="center" size="sm" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        placement="center"
+        size="sm"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -131,7 +137,11 @@ const Header = ({ sidebar, setSidebar }) => {
                         />
                         <p className="text-center text-small">
                           Already have an account?{" "}
-                          <Link className="hover:cursor-pointer" size="sm" onPress={() => setSelected("login")}>
+                          <Link
+                            className="hover:cursor-pointer"
+                            size="sm"
+                            onPress={() => setSelected("login")}
+                          >
                             Login
                           </Link>
                         </p>
