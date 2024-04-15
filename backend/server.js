@@ -1,6 +1,10 @@
-import express from "express";
+import express from "express"; 
+import 'dotenv/config'
 import cors from "cors";
+import mongoose from "mongoose";
+import connectDB from "./connectDB.js";
 const app = express();
+
 app.use(cors());
 
 const furnitureapi = [
@@ -226,9 +230,16 @@ const furnitureapi = [
   },
 ];
 
-app.listen(3000, () => {
-  console.log("app is listening on port 3000");
-});
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("MONGO db connection failed !!! ", err);
+  });
+
 app.get("/", (req, res) => {
   console.log("hello from server");
 });
@@ -239,4 +250,5 @@ app.get("/api/furniture", async (req, res) => {
     console.error("Error fetching furniture data:", error);
   }
 });
+
 export default app;

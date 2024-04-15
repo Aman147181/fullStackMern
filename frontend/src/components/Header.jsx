@@ -55,8 +55,8 @@ const Header = ({ sidebar, setSidebar }) => {
           <h1 className=" pr-1">
             <FaUser />
           </h1>{" "}
-          <h1 className="md:hover:text-[#254D4D] hover:font-medium" onClick={() => setSelected("login")}>Login</h1> <h1>/</h1>
-          <h1 className="md:hover:text-[#254D4D] hover:font-medium" onClick={()=>setSelected("sign-up")}>Sign up</h1>
+          <h1 className="md:hover:text-[#254D4D] hidden sm:block hover:font-medium" onClick={() => setSelected("login")}>Login</h1> <h1 className="sm:block hidden">/</h1>
+          <h1 className="md:hover:text-[#254D4D] hover:font-medium hidden sm:block" onClick={()=>setSelected("sign-up")}>Sign up</h1>
         </button>
       </div>
       <button
