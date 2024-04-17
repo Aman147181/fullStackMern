@@ -28,7 +28,7 @@ const Shop = () => {
 
   useEffect(() => {
     // Fetch all furniture data from the backend
-    axios.get("http://localhost:3000/api/furniture")
+    axios.get("http://localhost:8000/api/furniture/allfurniture")
       .then((response) => setAllFurniture(response.data))
       .catch(error => console.log(error));
   }, []);
@@ -39,7 +39,7 @@ const Shop = () => {
       const priceInRange =
         furniture.price >= value[0] && furniture.price <= value[1];
       const categoryMatch =
-        selectedCategory === "all" || furniture.type === selectedCategory;
+        selectedCategory === "all" || furniture.category === selectedCategory;
       return priceInRange && categoryMatch;
     });
     setFilteredFurniture(filteredData);
