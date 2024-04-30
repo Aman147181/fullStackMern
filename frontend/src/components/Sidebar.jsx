@@ -19,6 +19,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
           <Link to="/contact">
             <h1 onClick={() => setSidebar(false)}>contact</h1>
           </Link>
+          
         </div>
       </div>
     </div>

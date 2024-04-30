@@ -28,7 +28,7 @@ const Shop = () => {
 
   useEffect(() => {
     // Fetch all furniture data from the backend
-    axios.get("http://localhost:8000/api/furniture/allfurniture")
+    axios.get("/api/furniture/allfurniture")
       .then((response) => setAllFurniture(response.data))
       .catch(error => console.log(error));
   }, []);

@@ -20,12 +20,11 @@ const furnitureSchema = new mongoose.Schema(
     stock: {
       type: Number,
       default: 0,
-        },
-        category: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Category",
-            
-    }
+    },
+    category: {
+      type: String,
+      required: true,
+    },
   },
 
   { timestamps: true }

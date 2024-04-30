@@ -1,14 +1,15 @@
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
-import mongoose from "mongoose";
 import connectDB from "./connectDB.js";
 const app = express();
 import furnitureRoute from "./routes/furniture.route.js";
-app.use(cors());
+import userRoute from "./routes/user.routes.js";
+
 
 app.use(express.json());
 app.use("/api/furniture", furnitureRoute);
+app.use("/api/user", userRoute);
 connectDB()
   .then(() => {
     app.listen(process.env.PORT || 3000, () => {
