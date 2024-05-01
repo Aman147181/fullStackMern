@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
-const user = JSON.parse(localStorage.getItem("user"));
+// const loggeduser = JSON.parse(localStorage.getItem("user"));
 const initialState = {
-  user: user ? user : null,
+  user: JSON.parse(localStorage.getItem("user"))||null,
   message: "",
 };
 
@@ -13,11 +13,10 @@ export const login = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post("/api/user/login", userData);
-      console.log(response);
-      if (response.data) {
+     
         localStorage.setItem("user", JSON.stringify(response.data));
-        
-      }
+        console.log(localStorage.getItem("user"));
+      
       return response.data;
     } catch (error) {
       console.log(error);
@@ -27,7 +26,7 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  localStorage.removeItem("user");
+   localStorage.removeItem("user");
 });
 
 export const authSlice = createSlice({
@@ -42,9 +41,9 @@ export const authSlice = createSlice({
     builder
       .addCase(login.pending, (state) => {})
       .addCase(login.fulfilled, (state, action) => {
-        
         state.user = action.payload;
         state.message = "User Logged In Successfully";
+
         toast.success(state.message);
       })
       .addCase(login.rejected, (state, action) => {
@@ -53,7 +52,6 @@ export const authSlice = createSlice({
         toast.error(state.message);
       })
       .addCase(logout.fulfilled, (state) => {
-       
         state.user = null;
       });
   },

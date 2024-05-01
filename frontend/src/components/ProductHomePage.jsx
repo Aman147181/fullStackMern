@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
 const ProductHomePage = () => {
   const navigate = useNavigate();
-  
 
   const [categoryArray] = useState([
     "all",
@@ -19,18 +18,18 @@ const ProductHomePage = () => {
   const [filteredFurniture, setFilteredFurniture] = useState([]);
   useEffect(() => {
     // Fetch all furniture data from the backend
-    axios.get("/api/furniture/allfurniture")
+    axios
+      .get("/api/furniture/allfurniture")
       .then((response) => setAllFurniture(response.data))
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
     // Filter furniture based on selected category and price range
     const filteredData = allFurniture.filter((furniture) => {
-      
       const categoryMatch =
         selectedCategory === "all" || furniture.category === selectedCategory;
-      return  categoryMatch;
+      return categoryMatch;
     });
     setFilteredFurniture(filteredData);
   }, [selectedCategory, allFurniture]);
@@ -52,8 +51,8 @@ const ProductHomePage = () => {
       </div>
 
       <div className="flex items-center justify-center my-5 uppercase font-roboto customsm:my-8 sm:my-12 lg:my-16 space-x-4 w-full">
-        {categoryArray.map((el) => (
-          <h1
+        {categoryArray.map((el,index) => (
+          <h1 key={index}
             onClick={() => {
               setSelectedCategory((a) => el);
             }}

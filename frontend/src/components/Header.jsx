@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 
-import { Modal, ModalContent, useDisclosure, User } from "@nextui-org/react";
+import {
+  Modal,
+  ModalContent,
+  useDisclosure,
+  User,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
 import { useSelector, useDispatch } from "react-redux";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import axios from "axios";
 
-import { login, reset } from "../features/auth/authSlice";
+import { login, logout, reset } from "../features/auth/authSlice";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import { FaUser } from "react-icons/fa";
@@ -33,7 +42,7 @@ const Header = ({ sidebar, setSidebar }) => {
   };
 
   const dispatch = useDispatch();
-  const { message, isSuccess, isError } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,7 +57,7 @@ const Header = ({ sidebar, setSidebar }) => {
 
   const [showpassword, setshowpassword] = useState(false);
   const loggeduser = JSON.parse(localStorage.getItem("user"));
-
+  console.log(loggeduser);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -110,14 +119,37 @@ const Header = ({ sidebar, setSidebar }) => {
         </RouterLink>
       </div>
       <div className=" sm:flex items-center space-x-2 hidden  sm:space-x-3 justify-center text-[#254D4D]">
-        {loggeduser ? (
-          <User
-            name={loggeduser.username}
-            description={loggeduser.email}
-            avatarProps={{
-              src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-            }}
-          />
+        {user ? (
+          <Dropdown placement="bottom-start">
+            <DropdownTrigger>
+              <User
+                as="button"
+                avatarProps={{
+                  isBordered: true,
+                  src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+                }}
+                className="transition-transform"
+                description={user.email}
+                name={user.username}
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="User Actions" variant="flat">
+              <DropdownItem key="profile" className="h-14 gap-2">
+                <p className="font-bold">Signed in as</p>
+                <p className="font-bold">{user.username}</p>
+              </DropdownItem>
+              <DropdownItem key="settings">My Profile</DropdownItem>
+              <DropdownItem key="team_settings">Dashboard</DropdownItem>
+
+              <DropdownItem
+                onClick={localStorage.removeItem("user")}
+                key="logout"
+                color="danger"
+              >
+                Log Out
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         ) : (
           <button className="rounded-full   flex items-center space-x-1  ">
             <h1 className=" pr-1">
